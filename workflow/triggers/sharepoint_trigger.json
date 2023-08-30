@@ -1,0 +1,30 @@
+{
+    "$connections": {
+      "value": {
+        "sharepoint": {
+          "connectionId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/sharepoint",
+          "connectionName": "sharepoint",
+          "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/sharepoint"
+        }
+      }
+    },
+    "recurrence": {
+      "frequency": "Minute",
+      "interval": 15
+    },
+    "splitOn": "@triggerOutputs()?['headers']['x-ms-file-name']",
+    "type": "ApiConnection",
+    "inputs": {
+      "host": {
+        "connection": {
+          "name": "@parameters('$connections')['sharepoint']['connectionId']"
+        }
+      },
+      "method": "get",
+      "path": "/datasets/default/tables/{tableName}/items",
+      "queries": {
+        "$filter": "Id gt @{triggerOutputs()?['body']?['d']?['results']?[0]?['Id']}"
+      }
+    }
+  }
+  
