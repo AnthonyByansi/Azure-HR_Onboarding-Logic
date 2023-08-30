@@ -1,0 +1,50 @@
+{
+    "$connections": {
+      "value": {
+        "azureresource": {
+          "connectionId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/azureresource",
+          "connectionName": "azureresource",
+          "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/azureresource"
+        }
+      }
+    },
+    "actions": {
+      "ProvisionResources": {
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['azureresource']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines",
+          "body": {
+            "location": "East US",
+            "properties": {
+              "hardwareProfile": {
+                "vmSize": "Standard_DS1_v2"
+              },
+              "storageProfile": {
+                "osDisk": {
+                  "osType": "Linux",
+                  "createOption": "FromImage"
+                }
+              },
+              "osProfile": {
+                "computerName": "newhirevm",
+                "adminUsername": "adminuser",
+                "adminPassword": "Password123!"
+              }
+            }
+          }
+        },
+        "runAfter": {
+          "AssignRoles": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      }
+    }
+  }
+  
