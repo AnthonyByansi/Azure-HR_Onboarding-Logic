@@ -1,0 +1,83 @@
+{
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "CreateUser": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['azuread']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/v1.0/users",
+          "body": {
+            "accountEnabled": true,
+            "displayName": "New Hire",
+            "mailNickname": "newhire",
+            "userPrincipalName": "newhire@yourtenant.onmicrosoft.com"
+          }
+        }
+      },
+      "AssignRoles": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['azuread']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/v1.0/users/newhire@yourtenant.onmicrosoft.com/appRoleAssignments",
+          "body": {
+            "principalId": "@outputs('CreateUser')?['body/principalId']",
+            "resourceId": "/appRoles/{appRoleId}"
+          }
+        }
+      },
+      "ProvisionResources": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['azureresource']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines",
+          "body": {
+            "location": "East US",
+            "properties": {
+              "hardwareProfile": {
+                "vmSize": "Standard_DS1_v2"
+              },
+              "storageProfile": {
+                "osDisk": {
+                  "osType": "Linux",
+                  "createOption": "FromImage"
+                }
+              },
+              "osProfile": {
+                "computerName": "newhirevm",
+                "adminUsername": "adminuser",
+                "adminPassword": "Password123!"
+              }
+            }
+          }
+        }
+      }
+      // Other actions...
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    },
+    "triggers": {
+      // Define triggers here...
+    }
+  }
+  
