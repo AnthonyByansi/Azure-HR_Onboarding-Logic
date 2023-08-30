@@ -1,0 +1,35 @@
+{
+    "$connections": {
+      "value": {
+        "azuread": {
+          "connectionId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/azuread",
+          "connectionName": "azuread",
+          "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/azuread"
+        }
+      }
+    },
+    "actions": {
+      "AssignRoles": {
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['azuread']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/v1.0/users/newhire@yourtenant.onmicrosoft.com/appRoleAssignments",
+          "body": {
+            "principalId": "@outputs('CreateUser')?['body/principalId']",
+            "resourceId": "/appRoles/{appRoleId}"
+          }
+        },
+        "runAfter": {
+          "CreateUser": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      }
+    }
+  }
+  
