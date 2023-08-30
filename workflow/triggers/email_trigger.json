@@ -1,0 +1,33 @@
+{
+    "$connections": {
+      "value": {
+        "office365": {
+          "connectionId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/office365",
+          "connectionName": "office365",
+          "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/office365"
+        }
+      }
+    },
+    "recurrence": {
+      "frequency": "Minute",
+      "interval": 15
+    },
+    "splitOn": "@triggerOutputs()?['body']['value'][0]['subject']",
+    "type": "ApiConnection",
+    "inputs": {
+      "host": {
+        "connection": {
+          "name": "@parameters('$connections')['office365']['connectionId']"
+        }
+      },
+      "method": "get",
+      "path": "/Mail/GetEmails",
+      "queries": {
+        "folderId": "inbox",
+        "$top": 1,
+        "$orderby": "DateTimeReceived desc",
+        "$filter": "IsRead eq false"
+      }
+    }
+  }
+  
