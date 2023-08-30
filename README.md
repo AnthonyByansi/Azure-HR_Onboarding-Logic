@@ -2,6 +2,11 @@
 
 This repository houses the infrastructure as code (IaC) and workflow logic to streamline and automate the onboarding process for new employees into Azure AD, while ensuring access to necessary Azure resources. This comprehensive guide will help you understand the project's structure, components, and deployment process.
 
+## Architecture
+
+![image](https://github.com/AnthonyByansi/Azure-HR_Onboarding-Logic/assets/101401469/964e893f-77a0-47ef-8036-051154fa0712)
+
+
 ## Table of Contents
 
 - [Introduction](#introduction)
