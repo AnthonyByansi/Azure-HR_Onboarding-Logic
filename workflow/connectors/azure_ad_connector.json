@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/Microsoft.Definitions.json#",
+    "api": {
+      "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/azuread"
+    },
+    "connection": {
+      "name": "azuread",
+      "displayName": "Azure AD",
+      "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/azuread",
+      "api": {
+        "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/azuread"
+      },
+      "scopes": {
+        "allowed": [
+          "/user.read",
+          "/user.readbasic.all",
+          "/user.read.all",
+          "/user.manageidclaims",
+          "/user.assign",
+          "/appRoleAssignment.readwrite.all"
+        ]
+      }
+    },
+    "triggers": [],
+    "actions": []
+  }
+  
