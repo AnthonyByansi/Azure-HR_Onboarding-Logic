@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/Microsoft.Definitions.json#",
+    "api": {
+      "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/email"
+    },
+    "connection": {
+      "name": "email",
+      "displayName": "Email",
+      "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/email",
+      "api": {
+        "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/managedApis/email"
+      }
+    },
+    "triggers": [],
+    "actions": []
+  }
+  
