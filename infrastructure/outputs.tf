@@ -1,3 +1,4 @@
-variable "resource_group_name" {
-  description = "Name of the resource group"
+
+output "vm_name" {
+  value = azurerm_virtual_machine.example_vm.name
 }
